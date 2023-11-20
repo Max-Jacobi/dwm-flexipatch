@@ -419,9 +419,9 @@ static const char *const autostart[] = {
 #if RENAMED_SCRATCHPADS_PATCH
 static const char *scratchpadcmd[] = {"s", TERMINAL, "-n", "spterm", NULL};
 #elif SCRATCHPADS_PATCH
-const char *spcmd1[] = {TERMINAL, "--name", "spterm", NULL };
-const char *spcmd2[] = {TERMINAL, "--name", "spcalc", "-e", "ipython-scratch", NULL };
-const char *spcmd3[] = {"emacsclient", "-c", "-frame-parameters='((name . \"sptodo\"))'", "-e", "'(open-gtd-file)'",  NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", NULL };
+const char *spcmd2[] = {"st", "-n", "spcalc", "-e", "ipython-scratch", NULL };
+const char *spcmd3[] = {"sptodo", NULL };
 
 static Sp scratchpads[] = {
    /* name          cmd  */
@@ -464,7 +464,7 @@ static char tagicons[][NUMTAGS][MAX_TAGLEN] =
 static char *tagicons[][NUMTAGS] =
 #endif // NAMETAG_PATCH
 {
-  [DEFAULT_TAGS] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
 	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
@@ -515,15 +515,15 @@ static const Rule rules[] = {
 	#if RENAMED_SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 	#elif SCRATCHPADS_PATCH
-	RULE(.class = TERMCLASS, .instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
-	RULE(.class = TERMCLASS, .instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
 	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1)
 	#endif // SCRATCHPADS_PATCH
   RULE(.class = TERMCLASS, .isterminal = 1)
+  RULE(.class = "st", .isterminal = 1)
   RULE(.title = "lf", .isfloating = 1, .isterminal = 1)
   RULE(.instance = "visit-gui", .isfloating = 1)
-  RULE(.instance = "python", .isfloating = 1, .isterminal = 1)
-  RULE(.class = TERMCLASS, .title = "ipython", .isfloating = 1, .isterminal = 1)
+  /* RULE(.class = TERMCLASS, .title = "ipython", .isfloating = 1, .isterminal = 1) */
   RULE(.class = "matplotlib", .isfloating = 1, .noswallow = 1)
   RULE(.instance = "mupen64plus", .isfloating = 1)
   RULE(.title = "Cloud Player | Audible.de - Brave", .isfloating = 1)
@@ -1434,7 +1434,7 @@ static const Command commands[] = {
 #if DEFAULT_KEYS
 static const Button buttons[] = {
   /* click                event mask           button          function        argument */
-  { ClkStatusText,        ShiftMask,           Button3,        spawn, SHCMD(TERMINAL " -e nvim ~/.local/src/dwmblocks/config.h") },
+  { ClkStatusText,        ShiftMask,           Button3,        spawn, SHCMD("emacsclient -c ~/.local/src/dwmblocks/config.h") },
 	#if BAR_STATUSCMD_PATCH && BAR_DWMBLOCKS_PATCH
 	{ ClkStatusText,        0,                   Button1,        sigstatusbar,   {.i = 1 } },
 	{ ClkStatusText,        0,                   Button2,        sigstatusbar,   {.i = 2 } },

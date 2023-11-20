@@ -5392,6 +5392,7 @@ main(int argc, char *argv[])
 	runautostart();
 	#endif
   applydefaultlayouts(0);
+	system("displayselect default");
 	run();
 	cleanup();
 	XCloseDisplay(dpy);

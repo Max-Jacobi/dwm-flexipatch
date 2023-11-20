@@ -1,11 +1,15 @@
 /* See LICENSE file for copyright and license details. */
 
+/* Constants */
+#define TERMINAL "kitty"
+#define TERMCLASS "kitty"
+
 /* appearance */
 #if ROUNDED_CORNERS_PATCH
-static const unsigned int borderpx       = 0;   /* border pixel of windows */
-static const int corner_radius           = 10;
+static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const int corner_radius           = 0;
 #else
-static const unsigned int borderpx       = 1;   /* border pixel of windows */
+static const unsigned int borderpx       = 2;   /* border pixel of windows */
 #endif // ROUNDED_CORNERS_PATCH
 #if BAR_BORDER_PATCH
 /* This allows the bar border size to be explicitly set separately from borderpx.
@@ -13,9 +17,12 @@ static const unsigned int borderpx       = 1;   /* border pixel of windows */
  * automatically update with setborderpx. */
 static const unsigned int barborderpx    = 0;  /* border pixel of bar */
 #endif // BAR_BORDER_PATCH
-static const unsigned int snap           = 32;  /* snap pixel */
+static const unsigned int snap           = 6;  /* snap pixel */
 #if SWALLOW_PATCH
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
+/* swallow emacs */
+static const char emacsclient[] = "emacsclient";
+static const char emacsname[] = "Emacs";
 #endif // SWALLOW_PATCH
 #if BAR_TAGPREVIEW_PATCH
 static const int scalepreview            = 4;        /* Tag preview scaling */
@@ -24,10 +31,10 @@ static const int scalepreview            = 4;        /* Tag preview scaling */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
 #endif // NO_MOD_BUTTONS_PATCH
 #if VANITYGAPS_PATCH
-static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 30;  /* vert outer gap between windows and screen edge */
+static unsigned int gappih               = 6;   /* horiz inner gap between windows */
+static unsigned int gappiv               = 6;   /* vert inner gap between windows */
+static unsigned int gappoh               = 6;   /* horiz outer gap between windows and screen edge */
+static unsigned int gappov               = 6;   /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
@@ -91,7 +98,7 @@ static const int statusmon               = 'A';
 #endif // BAR_STATUSALLMONS_PATCH | BAR_STATICSTATUS_PATCH
 #if BAR_STATUSPADDING_PATCH
 static const int horizpadbar             = 2;   /* horizontal padding for statusbar */
-static const int vertpadbar              = 0;   /* vertical padding for statusbar */
+static const int vertpadbar              = 2;   /* vertical padding for statusbar */
 #endif // BAR_STATUSPADDING_PATCH
 #if BAR_STATUSBUTTON_PATCH
 static const char buttonbar[]            = "<O>";
@@ -162,20 +169,20 @@ static void (*bartabmonfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 #if BAR_PANGO_PATCH
 static const char font[]                 = "monospace 10";
 #else
-static const char *fonts[]               = { "monospace:size=10" };
+static const char *fonts[]               = { "monospace:size=14", "Font Awesome 6 Brands:pixelsize=14", "Font Awesome 6 Free Solid", "forkawesome:pixelsize=14", "JoyPixels:pixelsize=14:antialias=true:autohint=true"};
 #endif // BAR_PANGO_PATCH
-static const char dmenufont[]            = "monospace:size=10";
+static const char dmenufont[]            = "monospace:size=14";
 
 static char c000000[]                    = "#000000"; // placeholder value
 
 static char normfgcolor[]                = "#bbbbbb";
-static char normbgcolor[]                = "#222222";
+static char normbgcolor[]                = "#373040";
 static char normbordercolor[]            = "#444444";
 static char normfloatcolor[]             = "#db8fd9";
 
 static char selfgcolor[]                 = "#eeeeee";
-static char selbgcolor[]                 = "#005577";
-static char selbordercolor[]             = "#005577";
+static char selbgcolor[]                 = "#5d4d7a";
+static char selbordercolor[]             = "#2d9574";
 static char selfloatcolor[]              = "#005577";
 
 static char titlenormfgcolor[]           = "#bbbbbb";
@@ -184,7 +191,7 @@ static char titlenormbordercolor[]       = "#444444";
 static char titlenormfloatcolor[]        = "#db8fd9";
 
 static char titleselfgcolor[]            = "#eeeeee";
-static char titleselbgcolor[]            = "#005577";
+static char titleselbgcolor[]            = "#5d4d7a";
 static char titleselbordercolor[]        = "#005577";
 static char titleselfloatcolor[]         = "#005577";
 
@@ -221,8 +228,6 @@ static char scratchnormfloatcolor[]      = "#77547E";
 #endif // RENAMED_SCRATCHPADS_PATCH
 
 #if BAR_FLEXWINTITLE_PATCH
-static char normTTBbgcolor[]             = "#330000";
-static char normLTRbgcolor[]             = "#330033";
 static char normMONObgcolor[]            = "#000033";
 static char normGRIDbgcolor[]            = "#003300";
 static char normGRD1bgcolor[]            = "#003300";
@@ -232,8 +237,6 @@ static char normHGRDbgcolor[]            = "#b96600";
 static char normDWDLbgcolor[]            = "#003333";
 static char normSPRLbgcolor[]            = "#333300";
 static char normfloatbgcolor[]           = "#115577";
-static char actTTBbgcolor[]              = "#440000";
-static char actLTRbgcolor[]              = "#440044";
 static char actMONObgcolor[]             = "#000044";
 static char actGRIDbgcolor[]             = "#004400";
 static char actGRD1bgcolor[]             = "#004400";
@@ -243,8 +246,6 @@ static char actHGRDbgcolor[]             = "#b97711";
 static char actDWDLbgcolor[]             = "#004444";
 static char actSPRLbgcolor[]             = "#444400";
 static char actfloatbgcolor[]            = "#116688";
-static char selTTBbgcolor[]              = "#550000";
-static char selLTRbgcolor[]              = "#550055";
 static char selMONObgcolor[]             = "#212171";
 static char selGRIDbgcolor[]             = "#005500";
 static char selGRD1bgcolor[]             = "#005500";
@@ -254,6 +255,15 @@ static char selHGRDbgcolor[]             = "#b98822";
 static char selDWDLbgcolor[]             = "#005555";
 static char selSPRLbgcolor[]             = "#555500";
 static char selfloatbgcolor[]            = "#117799";
+
+static char selTTBbgcolor[]               = "#5d4d7a";
+static char normTTBbgcolor[]              = "#373040";
+static char actTTBbgcolor[]               = "#272030";
+
+static char selLTRbgcolor[]               = "#5d4d7a";
+static char normLTRbgcolor[]              = "#373040";
+static char actLTRbgcolor[]               = "#272030";
+
 #endif // BAR_FLEXWINTITLE_PATCH
 
 #if BAR_ALPHA_PATCH
@@ -401,18 +411,23 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 #if COOL_AUTOSTART_PATCH
 static const char *const autostart[] = {
-	"st", NULL,
+  TERMINAL, NULL,
 	NULL /* terminate */
 };
 #endif // COOL_AUTOSTART_PATCH
 
 #if RENAMED_SCRATCHPADS_PATCH
-static const char *scratchpadcmd[] = {"s", "st", "-n", "spterm", NULL};
+static const char *scratchpadcmd[] = {"s", TERMINAL, "-n", "spterm", NULL};
 #elif SCRATCHPADS_PATCH
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd1[] = {TERMINAL, "--name", "spterm", NULL };
+const char *spcmd2[] = {TERMINAL, "--name", "spcalc", "-e", "ipython-scratch", NULL };
+const char *spcmd3[] = {"emacsclient", "-c", "-frame-parameters='((name . \"sptodo\"))'", "-e", "'(open-gtd-file)'",  NULL };
+
 static Sp scratchpads[] = {
    /* name          cmd  */
    {"spterm",      spcmd1},
+   {"spcalc",      spcmd2},
+   {"sptodo",      spcmd3},
 };
 #endif // SCRATCHPADS_PATCH
 
@@ -449,7 +464,7 @@ static char tagicons[][NUMTAGS][MAX_TAGLEN] =
 static char *tagicons[][NUMTAGS] =
 #endif // NAMETAG_PATCH
 {
-	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+  [DEFAULT_TAGS] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
 	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
@@ -497,13 +512,22 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Gimp", .tags = 1 << 4)
-	RULE(.class = "Firefox", .tags = 1 << 7)
 	#if RENAMED_SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 	#elif SCRATCHPADS_PATCH
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+	RULE(.class = TERMCLASS, .instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
+	RULE(.class = TERMCLASS, .instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
+	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1)
 	#endif // SCRATCHPADS_PATCH
+  RULE(.class = TERMCLASS, .isterminal = 1)
+  RULE(.title = "lf", .isfloating = 1, .isterminal = 1)
+  RULE(.instance = "visit-gui", .isfloating = 1)
+  RULE(.instance = "python", .isfloating = 1, .isterminal = 1)
+  RULE(.class = TERMCLASS, .title = "ipython", .isfloating = 1, .isterminal = 1)
+  RULE(.class = "matplotlib", .isfloating = 1, .noswallow = 1)
+  RULE(.instance = "mupen64plus", .isfloating = 1)
+  RULE(.title = "Cloud Player | Audible.de - Brave", .isfloating = 1)
+  RULE(.title = "Ediff", .isfloating = 1, .noswallow = 1)
 };
 
 #if MONITOR_RULES_PATCH
@@ -623,7 +647,7 @@ static const BarRule barrules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 #if FLEXTILE_DELUXE_LAYOUT
 static const int nstack      = 0;    /* number of clients in primary stack area */
@@ -655,12 +679,12 @@ static const int scrollargs[][2] = {
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
+	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
  	{ "><>",      NULL,             {0} },    /* no layout function means floating behavior */
 	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ "|||",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
 	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
-	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
 	{ "===",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // bstackhoriz
 	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // centeredmaster
 	{ "-M-",      flextile,         { -1, -1, SPLIT_CENTERED_HORIZONTAL, TOP_TO_BOTTOM, LEFT_TO_RIGHT, LEFT_TO_RIGHT, NULL } }, // centeredmaster horiz
@@ -671,11 +695,11 @@ static const Layout layouts[] = {
 	#if TILE_LAYOUT
 	{ "[]=",      tile,             {0} },
 	#endif
-	#if MONOCLE_LAYOUT
-	{ "[M]",      monocle,          {0} },
-	#endif
 	#if BSTACK_LAYOUT
 	{ "TTT",      bstack,           {0} },
+	#endif
+	#if MONOCLE_LAYOUT
+	{ "[M]",      monocle,          {0} },
 	#endif
 	#if BSTACKHORIZ_LAYOUT
 	{ "===",      bstackhoriz,      {0} },
@@ -717,13 +741,13 @@ static const Layout layouts[] = {
 	#if TILE_LAYOUT
 	{ "[]=",      tile },    /* first entry is default */
 	#endif
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	#if MONOCLE_LAYOUT
-	{ "[M]",      monocle },
-	#endif
 	#if BSTACK_LAYOUT
 	{ "TTT",      bstack },
 	#endif
+	#if MONOCLE_LAYOUT
+	{ "[M]",      monocle },
+	#endif
+	{ "><>",      NULL },    /* no layout function means floating behavior */
 	#if BSTACKHORIZ_LAYOUT
 	{ "===",      bstackhoriz },
 	#endif
@@ -769,7 +793,7 @@ static const char *xkb_layouts[]  = {
 #endif // XKB_PATCH
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #if COMBO_PATCH && SWAPTAGS_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
@@ -836,11 +860,11 @@ static const char *xkb_layouts[]  = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-	{ MOD, XK_s,     ACTION##stack, {.i = PREVSEL } }, \
-	{ MOD, XK_w,     ACTION##stack, {.i = 0 } }, \
-	{ MOD, XK_e,     ACTION##stack, {.i = 1 } }, \
-	{ MOD, XK_a,     ACTION##stack, {.i = 2 } }, \
-	{ MOD, XK_z,     ACTION##stack, {.i = -1 } },
+	/* { MOD, XK_s,     ACTION##stack, {.i = PREVSEL } }, \ */
+	/* { MOD, XK_w,     ACTION##stack, {.i = 0 } }, \ */
+	/* { MOD, XK_e,     ACTION##stack, {.i = 1 } }, \ */
+	/* { MOD, XK_a,     ACTION##stack, {.i = 2 } }, \ */
+	/* { MOD, XK_z,     ACTION##stack, {.i = -1 } }, */
 #endif // STACKER_PATCH
 
 #if BAR_HOLDBAR_PATCH
@@ -869,7 +893,7 @@ static const char *dmenucmd[] = {
 	#endif // BAR_DMENUMATCHTOP_PATCH
 	NULL
 };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
 
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
@@ -895,6 +919,76 @@ static const Key on_empty_keys[] = {
 };
 #endif // ON_EMPTY_KEYS_PATCH
 
+#if DEFAULT_KEYS
+static const Key keys[] = {
+  /* modifier                     key        function        argument */
+  STACKKEYS(MODKEY,                          focus)
+  STACKKEYS(MODKEY|ShiftMask,                push)
+  TAGKEYS(      XK_1,    0)
+  TAGKEYS(      XK_2,    1)
+  TAGKEYS(      XK_3,    2)
+  TAGKEYS(      XK_4,    3)
+  TAGKEYS(      XK_5,    4)
+  TAGKEYS(      XK_6,    5)
+  TAGKEYS(      XK_7,    6)
+  TAGKEYS(      XK_8,    7)
+  TAGKEYS(      XK_9,    8)
+  { MODKEY,                       XK_0,          view,  {.ui = ~0 } },
+  { MODKEY|ShiftMask,             XK_0,          tag,  {.ui = ~0 } },
+  { MODKEY,                       XK_minus,      spawn, SHCMD("pamixer --allow-boost -d 5; kill -44 $(pidof dwmblocks)") },
+  { MODKEY|ShiftMask,             XK_minus,      spawn, SHCMD("pamixer --allow-boost -d 15; kill -44 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_equal,      spawn, SHCMD("pamixer --allow-boost -i 5; kill -44 $(pidof dwmblocks)") },
+  { MODKEY|ShiftMask,             XK_equal,      spawn, SHCMD("pamixer --allow-boost -i 15; kill -44 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_BackSpace,  spawn, SHCMD("sysact") },
+  { MODKEY|ShiftMask,             XK_grave,      spawn, SHCMD("dmenuunicode") },
+
+  { MODKEY,                       XK_Tab,        view,    {0} },
+  { MODKEY,                       XK_q,          killclient,  {0} },
+  { MODKEY,                       XK_y,          applydefaultlayouts,  {0} }, /* tile */
+	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
+	{ MODKEY|ShiftMask,             XK_t,          setlayout,              {.v = &layouts[1]} },
+  { MODKEY,                       XK_o,          incnmaster,     {.i = +1 } },
+  { MODKEY|ShiftMask,             XK_o,          incnmaster,     {.i = -1 } },
+  { MODKEY,                       XK_backslash,  view,    {0} },
+
+	{ MODKEY,                       XK_p,          spawn,  {.v = dmenucmd } },
+  { MODKEY,                       XK_h,          focusmon,  {.i = -1 } },
+  { MODKEY|ShiftMask,             XK_h,          tagmon,    {.i = -1 } },
+  { MODKEY,                       XK_l,          focusmon,  {.i = +1 } },
+  { MODKEY|ShiftMask,             XK_l,          tagmon,    {.i = +1 } },
+  { MODKEY,                       XK_Return,     spawn, {.v = termcmd } },
+
+  { MODKEY,                       XK_b,          togglebar,  {0} },
+  { MODKEY,                       XK_comma,      setmfact,  {.f = -0.05} },
+  { MODKEY,                       XK_period,     setmfact,  {.f = +0.05} },
+
+  { MODKEY,                       XK_space,      zoom,    {0} },
+  { MODKEY|ShiftMask,             XK_space,      togglefloating,  {0} },
+	#if DISTRIBUTETAGS_PATCH
+	{ MODKEY|ControlMask,           XK_d,          distributetags,         {0} },
+	#endif // DISTRIBUTETAGS_PATCH
+	#if SHIFTTAGS_PATCH
+  { MODKEY|ShiftMask,             XK_g,          shifttag,  { .i = -1 } },
+  { MODKEY|ShiftMask,             XK_semicolon,  shifttag,  { .i = 1 } },
+	#endif // SHIFTTAG_PATCH
+	#if SHIFTVIEW_CLIENTS_PATCH
+  { MODKEY,                       XK_g,          shiftviewclients,  { .i = -1 } },
+  { MODKEY,                       XK_semicolon,  shiftviewclients,  { .i = 1 } },
+	#endif // SHIFTVIEW_CLIENTS_PATCH
+	#if SHIFTBOTH_PATCH
+	{ MODKEY|ControlMask,           XK_g,          shiftboth,  { .i = -1 } },
+	{ MODKEY|ControlMask,           XK_semicolon,  shiftboth,  { .i = +1 } },
+	#endif // SHIFTBOTH_PATCH
+	#if TOGGLEFULLSCREEN_PATCH
+	{ MODKEY,                       XK_f,          togglefullscreen,       {0} },
+	#endif // TOGGLEFULLSCREEN_PATCH
+	#if SCRATCHPADS_PATCH
+  { MODKEY,                       XK_a,          togglescratch,  {.ui = 0} },
+  { MODKEY,                       XK_apostrophe, togglescratch,  {.ui = 1} },
+  { MODKEY,                       XK_grave,      togglescratch,  {.ui = 2} },
+  #endif // SCRATCHPADS_PATCH
+};
+#else
 static const Key keys[] = {
 	/* modifier                     key            function                argument */
 	#if KEYMODES_PATCH
@@ -1296,6 +1390,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                                  7)
 	TAGKEYS(                        XK_9,                                  8)
 };
+#endif // DEFAULT_KEYS
 
 #if KEYMODES_PATCH
 static const Key cmdkeys[] = {
@@ -1329,6 +1424,36 @@ static const Command commands[] = {
 #else
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 #endif //
+
+#if DEFAULT_KEYS
+static const Button buttons[] = {
+  /* click                event mask           button          function        argument */
+  { ClkStatusText,        ShiftMask,           Button3,        spawn, SHCMD(TERMINAL " -e nvim ~/.local/src/dwmblocks/config.h") },
+	#if BAR_STATUSCMD_PATCH && BAR_DWMBLOCKS_PATCH
+	{ ClkStatusText,        0,                   Button1,        sigstatusbar,   {.i = 1 } },
+	{ ClkStatusText,        0,                   Button2,        sigstatusbar,   {.i = 2 } },
+	{ ClkStatusText,        0,                   Button3,        sigstatusbar,   {.i = 3 } },
+	#elif BAR_STATUSCMD_PATCH
+	{ ClkStatusText,        0,                   Button1,        spawn,          {.v = statuscmd } },
+	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = statuscmd } },
+	{ ClkStatusText,        0,                   Button3,        spawn,          {.v = statuscmd } },
+	#else
+	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = termcmd } },
+	#endif // BAR_STATUSCMD_PATCH
+  { ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
+  { ClkClientWin,         MODKEY,              Button2,        defaultgaps,  {0} },
+  { ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
+  { ClkClientWin,         MODKEY,              Button4,        incrgaps,  {.i = +1} },
+  { ClkClientWin,         MODKEY,              Button5,        incrgaps,  {.i = -1} },
+  { ClkTagBar,            0,                   Button1,        view,           {0} },
+  { ClkTagBar,            0,                   Button3,        toggleview,     {0} },
+  { ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
+  { ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
+  { ClkTagBar,            0,                   Button4,        shiftviewclients,  {.i = -1} },
+  { ClkTagBar,            0,                   Button5,        shiftviewclients,  {.i = 1} },
+  { ClkRootWin,           0,                   Button2,        togglebar,  {0} },
+};
+#else
 static const Button buttons[] = {
 	/* click                event mask           button          function        argument */
 	#if BAR_STATUSBUTTON_PATCH
@@ -1393,6 +1518,7 @@ static const Button buttons[] = {
 	{ ClkTabBar,            0,                   Button1,        focuswin,       {0} },
 	#endif // TAB_PATCH
 };
+#endif // DEFAULT_KEYS
 
 #if DWMC_PATCH
 /* signal definitions */

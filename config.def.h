@@ -422,12 +422,14 @@ static const char *scratchpadcmd[] = {"s", TERMINAL, "-n", "spterm", NULL};
 const char *spcmd1[] = {"st", "-n", "spterm", NULL };
 const char *spcmd2[] = {"st", "-n", "spcalc", "-e", "ipython-scratch", NULL };
 const char *spcmd3[] = {"sptodo", NULL };
+const char *spcmd4[] = {"st", "-n", "spfile", "-e", "lf", NULL };
 
 static Sp scratchpads[] = {
    /* name          cmd  */
    {"spterm",      spcmd1},
    {"spcalc",      spcmd2},
    {"sptodo",      spcmd3},
+   {"spfile",      spcmd4},
 };
 #endif // SCRATCHPADS_PATCH
 
@@ -517,6 +519,7 @@ static const Rule rules[] = {
 	#elif SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1)
 	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1)
 	#endif // SCRATCHPADS_PATCH
   RULE(.class = TERMCLASS, .isterminal = 1)
@@ -573,7 +576,7 @@ static const BarRule barrules[] = {
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_stbutton,           draw_stbutton,          click_stbutton,          NULL,                    "statusbutton" },
 	#endif // BAR_STATUSBUTTON_PATCH
 	#if BAR_POWERLINE_TAGS_PATCH
-	{  0,        0,     BAR_ALIGN_LEFT,   width_pwrl_tags,          draw_pwrl_tags,         click_pwrl_tags,         hover_pwrl_tags,         "powerline_tags" },
+	{  -1,        0,     BAR_ALIGN_LEFT,   width_pwrl_tags,          draw_pwrl_tags,         click_pwrl_tags,         hover_pwrl_tags,         "powerline_tags" },
 	#endif // BAR_POWERLINE_TAGS_PATCH
 	#if BAR_TAGS_PATCH
 	{ -1,        0,     BAR_ALIGN_LEFT,   width_tags,               draw_tags,              click_tags,              hover_tags,              "tags" },
@@ -986,6 +989,7 @@ static const Key keys[] = {
   { MODKEY,                       XK_a,          togglescratch,  {.ui = 0} },
   { MODKEY,                       XK_apostrophe, togglescratch,  {.ui = 1} },
   { MODKEY,                       XK_grave,      togglescratch,  {.ui = 2} },
+  { MODKEY,                       XK_v,          togglescratch,  {.ui = 3} },
   #endif // SCRATCHPADS_PATCH
 };
 #else

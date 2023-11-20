@@ -607,7 +607,7 @@ typedef struct {
 #endif // SELECTIVEFAKEFULLSCREEN_PATCH
 #if SWALLOW_PATCH
 #define NOSWALLOW , .noswallow = 1
-#define TERMINAL , .isterminal = 1
+/* #define TERMINAL , .isterminal = 1 */
 #else
 #define NOSWALLOW
 #define TERMINAL
@@ -633,6 +633,7 @@ typedef struct {
 #endif // MONITOR_RULES_PATCH
 
 /* function declarations */
+static void applydefaultlayouts(const Arg *arg);
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
 static void arrange(Monitor *m);
@@ -647,6 +648,7 @@ static void clientmessage(XEvent *e);
 static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
+static int containsemacsclient(pid_t p);
 static Monitor *createmon(void);
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
@@ -666,9 +668,11 @@ static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
 #endif // STACKER_PATCH
 static Atom getatomprop(Client *c, Atom prop, Atom req);
+static pid_t getchildprocess(pid_t p);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
+static pid_t getyoungestchild(pid_t p);
 static void grabbuttons(Client *c, int focused);
 #if KEYMODES_PATCH
 static void grabdefkeys(void);
@@ -863,6 +867,21 @@ struct NumTags { char limitexceeded[NUMTAGS > 31 ? -1 : 1]; };
 #endif // SCRATCHPAD_ALT_1_PATCH
 
 /* function implementations */
+void
+applydefaultlayouts(const Arg *arg)
+{
+  Monitor *m;
+  for (m = mons; m; m = m->next) {
+    if (m->mw <= 1500) {
+      m->sellt = 0;
+      m->lt[0] = &layouts[1];
+      m->lt[1] = &layouts[2%LENGTH(layouts)];
+      strncpy(m->ltsymbol, layouts[1].symbol, sizeof m->ltsymbol);
+	    arrange(m);
+    }
+  }
+}
+
 void
 applyrules(Client *c)
 {
@@ -1595,6 +1614,29 @@ configurerequest(XEvent *e)
 	XSync(dpy, False);
 }
 
+int
+containsemacsclient(pid_t p)
+{
+    unsigned int young = getyoungestchild(p);
+
+    if (!young)
+        return 0;
+
+    FILE *f;
+    char buf[256];
+
+    snprintf(buf, sizeof(buf) - 1, "ps -p %u -o command=", young);
+
+    if(!(f = popen(buf, "r")))
+        return 0;
+
+    char pidname[256];
+    fscanf(f, "%s", pidname);
+    pclose(f);
+
+    return strstr(pidname, emacsclient) != NULL;
+}
+
 Monitor *
 createmon(void)
 {
@@ -1878,7 +1920,7 @@ void
 drawbar(Monitor *m)
 {
 	Bar *bar;
-	
+
 	#if !BAR_FLEXWINTITLE_PATCH
 	if (m->showbar)
 	#endif // BAR_FLEXWINTITLE_PATCH
@@ -2234,6 +2276,25 @@ getatomprop(Client *c, Atom prop, Atom req)
 	return atom;
 }
 
+pid_t
+getchildprocess(pid_t p)
+{
+    unsigned int v = 0;
+#ifdef __linux__
+    FILE *f;
+    char buf[256];
+    snprintf(buf, sizeof(buf) - 1, "pgrep -P %u", (unsigned) p);
+
+    if(!(f = popen(buf, "r")))
+        return 0;
+
+    fscanf(f, "%u", &v);
+    pclose(f);
+#endif
+
+    return (pid_t) v;
+}
+
 int
 getrootptr(int *x, int *y)
 {
@@ -2283,6 +2344,21 @@ gettextprop(Window w, Atom atom, char *text, unsigned int size)
 	text[size - 1] = '\0';
 	XFree(name.value);
 	return 1;
+}
+
+pid_t
+getyoungestchild(pid_t p)
+{
+    unsigned int young = getchildprocess(p);
+    unsigned int tmp;
+
+    if (!young)
+        return 0;
+    while ((tmp = getchildprocess(young))) {
+        young = tmp;
+    }
+
+    return young;
 }
 
 void
@@ -5315,6 +5391,7 @@ main(int argc, char *argv[])
 	#if AUTOSTART_PATCH
 	runautostart();
 	#endif
+  applydefaultlayouts(0);
 	run();
 	cleanup();
 	XCloseDisplay(dpy);
@@ -5324,4 +5401,3 @@ main(int argc, char *argv[])
 	#endif // RESTARTSIG_PATCH
 	return EXIT_SUCCESS;
 }
-

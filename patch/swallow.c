@@ -197,7 +197,8 @@ termforwin(const Client *w)
 		return NULL;
 
 	c = selmon->sel;
-	if (c && c->isterminal && !c->swallowing && c->pid && isdescprocess(c->pid, w->pid))
+	if (c && c->isterminal && !c->swallowing && c->pid &&
+      (isdescprocess(c->pid, w->pid) || (containsemacsclient(c->pid) && (strstr(w->name,emacsname)))))
 		return c;
 
 	for (m = mons; m; m = m->next) {
@@ -225,4 +226,3 @@ swallowingclient(Window w)
 
 	return NULL;
 }
-

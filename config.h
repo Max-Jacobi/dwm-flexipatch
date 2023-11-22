@@ -423,6 +423,7 @@ const char *spcmd1[] = {"st", "-n", "spterm", NULL };
 const char *spcmd2[] = {"st", "-n", "spcalc", "-e", "ipython-scratch", NULL };
 const char *spcmd3[] = {"sptodo", NULL };
 const char *spcmd4[] = {"st", "-n", "spfile", "-e", "lf", NULL };
+const char *spcmd5[] = {"zotero", NULL };
 
 static Sp scratchpads[] = {
    /* name          cmd  */
@@ -430,6 +431,7 @@ static Sp scratchpads[] = {
    {"spcalc",      spcmd2},
    {"sptodo",      spcmd3},
    {"spfile",      spcmd4},
+   {"sprefs",      spcmd5},
 };
 #endif // SCRATCHPADS_PATCH
 
@@ -519,8 +521,9 @@ static const Rule rules[] = {
 	#elif SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
-	RULE(.instance = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1)
 	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1)
+	RULE(.instance = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "Navigator", .class = "Zotero", .tags = SPTAG(4))
 	#endif // SCRATCHPADS_PATCH
   RULE(.class = TERMCLASS, .isterminal = 1)
   RULE(.class = "st", .isterminal = 1)
@@ -531,6 +534,7 @@ static const Rule rules[] = {
   RULE(.instance = "mupen64plus", .isfloating = 1)
   RULE(.title = "Cloud Player | Audible.de - Brave", .isfloating = 1)
   RULE(.title = "Ediff", .isfloating = 1, .noswallow = 1)
+	RULE(.title = "emacs-everywhere", .isfloating = 1)
 };
 
 #if MONITOR_RULES_PATCH
@@ -990,6 +994,7 @@ static const Key keys[] = {
   { MODKEY,                       XK_apostrophe, togglescratch,  {.ui = 1} },
   { MODKEY,                       XK_grave,      togglescratch,  {.ui = 2} },
   { MODKEY,                       XK_v,          togglescratch,  {.ui = 3} },
+  { MODKEY,                       XK_r,          togglescratch,  {.ui = 4} },
   #endif // SCRATCHPADS_PATCH
 };
 #else

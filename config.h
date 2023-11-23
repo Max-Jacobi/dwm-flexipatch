@@ -519,15 +519,14 @@ static const Rule rules[] = {
 	#if RENAMED_SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 	#elif SCRATCHPADS_PATCH
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
-	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
-	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1)
-	RULE(.instance = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1)
-	RULE(.instance = "Navigator", .class = "Zotero", .tags = SPTAG(4))
+	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 70% 60%")
+	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 50% 80%")
+	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1, .floatpos = "50% 50% 60% 70%")
+	RULE(.instance = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 80% 60%")
+	RULE(.instance = "Navigator", .class = "Zotero", .tags = SPTAG(4), .isfloating = 1, .floatpos = "50% 50% 90% 90%")
 	#endif // SCRATCHPADS_PATCH
   RULE(.class = TERMCLASS, .isterminal = 1)
   RULE(.class = "st", .isterminal = 1)
-  RULE(.title = "lf", .isfloating = 1, .isterminal = 1)
   RULE(.instance = "visit-gui", .isfloating = 1)
   /* RULE(.class = TERMCLASS, .title = "ipython", .isfloating = 1, .isterminal = 1) */
   RULE(.class = "matplotlib", .isfloating = 1, .noswallow = 1)

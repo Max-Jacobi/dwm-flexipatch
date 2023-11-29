@@ -419,10 +419,10 @@ static const char *const autostart[] = {
 #if RENAMED_SCRATCHPADS_PATCH
 static const char *scratchpadcmd[] = {"s", TERMINAL, "-n", "spterm", NULL};
 #elif SCRATCHPADS_PATCH
-const char *spcmd1[] = {"st", "-n", "spterm", NULL };
-const char *spcmd2[] = {"st", "-n", "spcalc", "-e", "ipython-scratch", NULL };
+const char *spcmd1[] = {TERMINAL, "--class", "spterm", NULL };
+const char *spcmd2[] = {TERMINAL, "--class", "spcalc", "-e", "ipython-scratch", NULL };
 const char *spcmd3[] = {"sptodo", NULL };
-const char *spcmd4[] = {"st", "-n", "spfile", "-e", "lf", NULL };
+const char *spcmd4[] = {TERMINAL, "--class", "spfile", "-e", "lf", NULL };
 const char *spcmd5[] = {"zotero", NULL };
 const char *spcmd6[] = {"spmail", NULL };
 
@@ -521,17 +521,16 @@ static const Rule rules[] = {
 	#if RENAMED_SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 	#elif SCRATCHPADS_PATCH
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 70% 60%")
-	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 50% 80%")
+	RULE(.class = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 70% 60%")
+	RULE(.class = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 50% 80%")
 	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1, .floatpos = "50% 50% 60% 70%")
-	RULE(.instance = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 80% 60%")
+	RULE(.class = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 80% 60%")
 	RULE(.title = "spmail", .tags = SPTAG(5), .isfloating = 1, .floatpos = "50% 50% 80% 80%")
 	RULE(.instance = "Navigator", .class = "Zotero", .tags = SPTAG(4), .isfloating = 1, .floatpos = "50% 50% 90% 90%")
 	#endif // SCRATCHPADS_PATCH
   RULE(.class = TERMCLASS, .isterminal = 1)
   RULE(.class = "st", .isterminal = 1)
   RULE(.instance = "visit-gui", .isfloating = 1)
-  /* RULE(.class = TERMCLASS, .title = "ipython", .isfloating = 1, .isterminal = 1) */
   RULE(.class = "matplotlib", .isfloating = 1, .noswallow = 1)
   RULE(.instance = "mupen64plus", .isfloating = 1)
   RULE(.title = "Cloud Player | Audible.de - Brave", .isfloating = 1)

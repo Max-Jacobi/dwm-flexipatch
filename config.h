@@ -1451,7 +1451,11 @@ static const Button buttons[] = {
 	#else
 	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = termcmd } },
 	#endif // BAR_STATUSCMD_PATCH
+	#if PLACEMOUSE_PATCH
+	{ ClkClientWin,         MODKEY,              Button1,        moveorplace,    {.i = 2} },
+	#else
   { ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
+  #endif // PLACEMOUSE_PATCH
   { ClkClientWin,         MODKEY,              Button2,        defaultgaps,  {0} },
   { ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
   { ClkClientWin,         MODKEY,              Button4,        incrgaps,  {.i = +1} },

@@ -101,9 +101,8 @@ int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned in
 void drw_arrow(Drw *drw, int x, int y, unsigned int w, unsigned int h, int direction, int slash);
 #endif // BAR_POWERLINE_TAGS_PATCH | BAR_POWERLINE_STATUS_PATCH
 #if BAR_POWERLINE_TAGS_ROUND_PATCH
-void drw_rounded_corners(Drw *drw, int x, int y, int h, int w);
+void drw_rounded_corners(Drw *drw, int x, int y, int h, int w, int direction);
 #endif // BAR_POWERLINE_TAGS_ROUND_PATCH
 
 /* Map functions */
 void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
-

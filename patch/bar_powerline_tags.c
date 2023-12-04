@@ -66,18 +66,32 @@ draw_pwrl_tags(Bar *bar, BarArg *a)
 		icon = tagicon(bar->mon, i);
 		invert = 0;
 		w = TEXTW(icon);
-		if (urg & 1 << i) {
-			drw_settrans(drw, prevscheme, (nxtscheme = scheme[bar->mon->tagset[bar->mon->seltags] & 1 << i ? SchemeSel : SchemeUrg]));
-		} else {
-			drw_settrans(drw, prevscheme, (nxtscheme = scheme[bar->mon->tagset[bar->mon->seltags] & 1 << i ? SchemeSel : SchemeNorm]));
-		}
-		#if BAR_POWERLINE_TAGS_SLASH_PATCH
-		drw_arrow(drw, x, a->y, plw, a->h, 1, 1);
-		#elif BAR_POWERLINE_TAGS_ROUND_PATCH
-    drw_rounded_corners(drw, x, a->y, a->h, plw);
-		#else
-		drw_arrow(drw, x, a->y, plw, a->h, 1, 0);
-		#endif // BAR_POWERLINE_TAGS_SLASH_PATCH | BAR_POWERLINE_TAGS_ROUND_PATCH
+
+    if (bar->mon->tagset[bar->mon->seltags] & 1 << i) {
+      nxtscheme = scheme[SchemeSel];
+    } else {
+      nxtscheme = scheme[urg & 1 << i ? SchemeUrg : SchemeNorm];
+    }
+
+    if (bar->mon->tagset[bar->mon->seltags] & 1 << i) {
+      drw_settrans(drw, nxtscheme, prevscheme);
+		  #if BAR_POWERLINE_TAGS_SLASH_PATCH
+		  drw_arrow(drw, x, a->y, plw, a->h, 0, 1);
+		  #elif BAR_POWERLINE_TAGS_ROUND_PATCH
+      drw_rounded_corners(drw, x, a->y, a->h, plw, 0);
+		  #else
+		  drw_arrow(drw, x, a->y, plw, a->h, 0, 0);
+		  #endif // BAR_POWERLINE_TAGS_SLASH_PATCH | BAR_POWERLINE_TAGS_ROUND_PATCH
+    } else {
+      drw_settrans(drw, prevscheme, nxtscheme);
+		  #if BAR_POWERLINE_TAGS_SLASH_PATCH
+		  drw_arrow(drw, x, a->y, plw, a->h, 1, 1);
+		  #elif BAR_POWERLINE_TAGS_ROUND_PATCH
+      drw_rounded_corners(drw, x, a->y, a->h, plw, 1);
+		  #else
+		  drw_arrow(drw, x, a->y, plw, a->h, 1, 0);
+		  #endif // BAR_POWERLINE_TAGS_SLASH_PATCH | BAR_POWERLINE_TAGS_ROUND_PATCH
+    }
 		x += plw;
 		drw_setscheme(drw, nxtscheme);
 		drw_text(drw, x, a->y, w, a->h, lrpad / 2, icon, invert, False);
@@ -91,7 +105,7 @@ draw_pwrl_tags(Bar *bar, BarArg *a)
 	#if BAR_POWERLINE_TAGS_SLASH_PATCH
 	drw_arrow(drw, x, a->y, plw, a->h, 1, 1);
 	#elif BAR_POWERLINE_TAGS_ROUND_PATCH
-  drw_rounded_corners(drw, x, a->y, a->h, plw);
+  drw_rounded_corners(drw, x, a->y, a->h, plw, 1);
 	#else
 	drw_arrow(drw, x, a->y, plw, a->h, 1, 0);
 	#endif // BAR_POWERLINE_TAGS_SLASH_PATCH | BAR_POWERLINE_TAGS_ROUND_PATCH

@@ -677,15 +677,18 @@ drw_arrow(Drw *drw, int x, int y, unsigned int w, unsigned int h, int direction,
 
 #if BAR_POWERLINE_TAGS_ROUND_PATCH
 void
-drw_rounded_corners(Drw *drw, int x, int y, int h, int w)
+drw_rounded_corners(Drw *drw, int x, int y, int h, int w, int direction)
 {
 	if (!drw || !drw->scheme)
 		  return;
 
 	const int segments = 10;
+  const unsigned int radius = w;
 	const int lin_h = h-w*2;
 
-	/* Draw rounded corners */
+	x = direction ? x : x + w;
+	w = direction ? w : -w;
+
 	XPoint points[segments * 2 + 2];
 
 	for (int i = 0; i <= segments; ++i) {
@@ -693,12 +696,12 @@ drw_rounded_corners(Drw *drw, int x, int y, int h, int w)
 
 		points[i] = (XPoint) {
 		  .x = x + w * sin(angle),
-		  .y = y + w - w * cos(angle)
+		  .y = y + radius - radius * cos(angle)
 		};
 
 		points[i + segments + 1] = (XPoint) {
 		  .x = x + w * cos(angle),
-		  .y = y + lin_h + w + w * sin(angle)
+		  .y = y + lin_h + radius + radius * sin(angle)
 		};
 	}
 
@@ -793,4 +796,3 @@ drw_cur_free(Drw *drw, Cur *cursor)
 	XFreeCursor(drw->dpy, cursor->cursor);
 	free(cursor);
 }
-

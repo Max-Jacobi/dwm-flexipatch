@@ -392,6 +392,10 @@
  */
 #define BAR_PANGO_PATCH 0
 
+/* Adds powerline rounded corners for the tags.
+ */
+#define BAR_POWERLINE_TAGS_ROUND_PATCH 1
+
 /* This patch allows the status text to be fixed to the bar on a specific
  * monitor rather than being drawn on the focused monitor.
  * The statusallmons patch takes precedence over this patch.

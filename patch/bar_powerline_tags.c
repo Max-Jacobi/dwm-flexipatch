@@ -41,7 +41,21 @@ draw_pwrl_tags(Bar *bar, BarArg *a)
 			urg |= c->tags;
 	}
 	x = a->x;
-	prevscheme = scheme[SchemeNorm];
+  prevscheme = scheme[SchemeNorm];
+	for (i = 0; i < NUMTAGS; i++) {
+		#if BAR_HIDEVACANTTAGS_PATCH
+		/* do not draw vacant tags */
+		if (!(occ & 1 << i || bar->mon->tagset[bar->mon->seltags] & 1 << i))
+			continue;
+		#endif // BAR_HIDEVACANTTAGS_PATCH
+		if (urg & 1 << i) {
+      prevscheme = scheme[bar->mon->tagset[bar->mon->seltags] & 1 << i ? SchemeSel : SchemeUrg];
+		} else {
+      prevscheme = scheme[bar->mon->tagset[bar->mon->seltags] & 1 << i ? SchemeSel : SchemeNorm];
+		}
+    break;
+  }
+
 	for (i = 0; i < NUMTAGS; i++) {
 		#if BAR_HIDEVACANTTAGS_PATCH
 		/* do not draw vacant tags */
@@ -59,9 +73,11 @@ draw_pwrl_tags(Bar *bar, BarArg *a)
 		}
 		#if BAR_POWERLINE_TAGS_SLASH_PATCH
 		drw_arrow(drw, x, a->y, plw, a->h, 1, 1);
+		#elif BAR_POWERLINE_TAGS_ROUND_PATCH
+    drw_rounded_corners(drw, x, a->y, a->h, plw);
 		#else
 		drw_arrow(drw, x, a->y, plw, a->h, 1, 0);
-		#endif // BAR_POWERLINE_TAGS_SLASH_PATCH
+		#endif // BAR_POWERLINE_TAGS_SLASH_PATCH | BAR_POWERLINE_TAGS_ROUND_PATCH
 		x += plw;
 		drw_setscheme(drw, nxtscheme);
 		drw_text(drw, x, a->y, w, a->h, lrpad / 2, icon, invert, False);
@@ -74,9 +90,11 @@ draw_pwrl_tags(Bar *bar, BarArg *a)
 	drw_settrans(drw, prevscheme, nxtscheme);
 	#if BAR_POWERLINE_TAGS_SLASH_PATCH
 	drw_arrow(drw, x, a->y, plw, a->h, 1, 1);
+	#elif BAR_POWERLINE_TAGS_ROUND_PATCH
+  drw_rounded_corners(drw, x, a->y, a->h, plw);
 	#else
 	drw_arrow(drw, x, a->y, plw, a->h, 1, 0);
-	#endif // BAR_POWERLINE_TAGS_SLASH_PATCH
+	#endif // BAR_POWERLINE_TAGS_SLASH_PATCH | BAR_POWERLINE_TAGS_ROUND_PATCH
 	return 1;
 }
 

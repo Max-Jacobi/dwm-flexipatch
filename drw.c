@@ -8,6 +8,7 @@
 #include "patches.h"
 #include "drw.h"
 #include "util.h"
+#include <math.h>
 
 #if BIDI_PATCH
 #include <fribidi.h>
@@ -672,6 +673,48 @@ drw_arrow(Drw *drw, int x, int y, unsigned int w, unsigned int h, int direction,
 	XFillPolygon(drw->dpy, drw->drawable, drw->gc, points, 3, Nonconvex, CoordModeOrigin);
 }
 #endif // BAR_POWERLINE_TAGS_PATCH | BAR_POWERLINE_STATUS_PATCH
+
+
+#if BAR_POWERLINE_TAGS_ROUND_PATCH
+void
+drw_rounded_corners(Drw *drw, int x, int y, int h, int w)
+{
+	if (!drw || !drw->scheme)
+		  return;
+
+	const int segments = 10;
+	const int lin_h = h-w*2;
+
+	/* Draw rounded corners */
+	XPoint points[segments * 2 + 2];
+
+	for (int i = 0; i <= segments; ++i) {
+		double angle = M_PI/2.0 * i / segments;
+
+		points[i] = (XPoint) {
+		  .x = x + w * sin(angle),
+		  .y = y + w - w * cos(angle)
+		};
+
+		points[i + segments + 1] = (XPoint) {
+		  .x = x + w * cos(angle),
+		  .y = y + lin_h + w + w * sin(angle)
+		};
+	}
+
+	XPoint bg[] = {
+		{x    , y    },
+		{x + w, y    },
+		{x + w, y + h},
+		{x    , y + h},
+	};
+	XSetForeground(drw->dpy, drw->gc, drw->scheme[ColBg].pixel);
+	XFillPolygon(drw->dpy, drw->drawable, drw->gc, bg, 4, Convex, CoordModeOrigin);
+
+	XSetForeground(drw->dpy, drw->gc, drw->scheme[ColFg].pixel);
+	XFillPolygon(drw->dpy, drw->drawable, drw->gc, points, segments * 2 + 2, Nonconvex, CoordModeOrigin);
+}
+#endif // BAR_POWERLINE_TAGS_ROUND_PATCH
 
 void
 drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h)

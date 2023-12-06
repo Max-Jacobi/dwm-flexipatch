@@ -536,6 +536,7 @@ static const Rule rules[] = {
   RULE(.title = "Cloud Player | Audible.de - Brave", .isfloating = 1)
   RULE(.title = "Ediff", .isfloating = 1, .noswallow = 1)
 	RULE(.title = "emacs-everywhere", .isfloating = 1)
+	RULE(.instance = "crx_nngceckbapebfimnlniiiahkandclblb", .isfloating = 1, .floatpos = "50% 50% 365W 220H")
 };
 
 #if MONITOR_RULES_PATCH

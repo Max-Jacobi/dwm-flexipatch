@@ -994,7 +994,7 @@ static const Key keys[] = {
 	#if SCRATCHPADS_PATCH
   { MODKEY,                       XK_a,          togglescratch,  {.ui = 0} },
   { MODKEY,                       XK_apostrophe, togglescratch,  {.ui = 1} },
-  { MODKEY,                       XK_grave,      togglescratch,  {.ui = 2} },
+  { MODKEY,                       XK_equal,      togglescratch,  {.ui = 2} },
   { MODKEY,                       XK_v,          togglescratch,  {.ui = 3} },
   { MODKEY,                       XK_r,          togglescratch,  {.ui = 4} },
   { MODKEY,                       XK_m,          togglescratch,  {.ui = 5} },

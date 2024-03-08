@@ -648,7 +648,9 @@ static void clientmessage(XEvent *e);
 static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
+#if SWALLOW_PATCH
 static int containsemacsclient(pid_t p);
+#endif //SWALLOW_PACH
 static Monitor *createmon(void);
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
@@ -1614,6 +1616,7 @@ configurerequest(XEvent *e)
 	XSync(dpy, False);
 }
 
+#if SWALLOW_PATCH
 int
 containsemacsclient(pid_t p)
 {
@@ -1636,6 +1639,7 @@ containsemacsclient(pid_t p)
 
     return strstr(pidname, emacsclient) != NULL;
 }
+#endif // SWALLOW_PATCH
 
 Monitor *
 createmon(void)

@@ -6,10 +6,10 @@
 
 /* appearance */
 #if ROUNDED_CORNERS_PATCH
-static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const unsigned int borderpx       = 3;   /* border pixel of windows */
 static const int corner_radius           = 0;
 #else
-static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const unsigned int borderpx       = 3;   /* border pixel of windows */
 #endif // ROUNDED_CORNERS_PATCH
 #if BAR_BORDER_PATCH
 /* This allows the bar border size to be explicitly set separately from borderpx.
@@ -169,7 +169,14 @@ static void (*bartabmonfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 #if BAR_PANGO_PATCH
 static const char font[]                 = "monospace 10";
 #else
-static const char *fonts[]               = { "monospace:size=14", "Font Awesome 6 Brands:pixelsize=14", "Font Awesome 6 Free Solid", "forkawesome:pixelsize=14", "JoyPixels:pixelsize=14:antialias=true:autohint=true"};
+static const char *fonts[]               = {"monospace:size=14", \
+                                            "file\\-icons:pixelsize=14", \
+                                            "forkawesome:pixelsize=14", \
+	                                          "JoyPixels:pixelsize=14:antialias=true:autohint=true" \
+                                            "Font Awesome 5 Brands:pixelsize=14", \
+                                            "Font Awesome 6 Free Solid:pixelsize=14", \
+                                            "Material Icons:pixelsize=14", \
+                                            "all\\-the\\-icons:pixelsize=14"};
 #endif // BAR_PANGO_PATCH
 static const char dmenufont[]            = "monospace:size=14";
 

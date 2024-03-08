@@ -132,7 +132,7 @@
  *
  * https://dwm.suckless.org/patches/tag-previews/
  */
-#define BAR_TAGPREVIEW_PATCH 0
+#define BAR_TAGPREVIEW_PATCH 1
 
 /* Show status in bar */
 #define BAR_STATUS_PATCH 1
@@ -333,7 +333,7 @@
 /* Allows the bar height to be explicitly set rather than being derived from font.
  * https://dwm.suckless.org/patches/bar_height/
  */
-#define BAR_HEIGHT_PATCH 0
+#define BAR_HEIGHT_PATCH 1
 
 /* This patch prevents dwm from drawing tags with no clients (i.e. vacant) on the bar.
  * https://dwm.suckless.org/patches/hide_vacant_tags/
@@ -406,7 +406,7 @@
 /* This patch draws and updates the statusbar on all monitors.
  * https://dwm.suckless.org/patches/statusallmons/
  */
-#define BAR_STATUSALLMONS_PATCH 0
+#define BAR_STATUSALLMONS_PATCH 1
 
 /* This patch enables colored text in the status bar. It changes the way colors are defined
  * in config.h allowing multiple color combinations for use in the status script.
@@ -756,7 +756,7 @@
  * in such scenarios the previous window loses fullscreen.
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-losefullscreen-6.2.diff
  */
-#define LOSEFULLSCREEN_PATCH 1
+#define LOSEFULLSCREEN_PATCH 0
 
 /* This patch adds helper functions for maximizing, horizontally and vertically, floating
  * windows using keybindings.

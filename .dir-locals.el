@@ -1,1 +1,1 @@
-((nil . ((projectile-project-install-cmd . "make clean install && kill -HUP $(pgrep -u $USER 'dwm$')"))))
+((nil . ((projectile-project-install-cmd . "sudo -A make clean install && kill -HUP $(pgrep -u $USER 'dwm$')"))))

@@ -169,15 +169,19 @@ static void (*bartabmonfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 #if BAR_PANGO_PATCH
 static const char font[]                 = "monospace 10";
 #else
-static const char *fonts[]               = {"monospace:size=14", \
-                                            "file\\-icons:pixelsize=14", \
-                                            "forkawesome:pixelsize=14", \
-	                                          "JoyPixels:pixelsize=14:antialias=true:autohint=true" \
-                                            "Font Awesome 5 Brands:pixelsize=14", \
-                                            "Font Awesome 6 Free Solid:pixelsize=14", \
-                                            "Material Icons:pixelsize=14", \
-                                            "all\\-the\\-icons:pixelsize=14"};
+static const char *fonts[] = {
+    "monospace:size=14",
+    "file\\-icons:pixelsize=14",
+    "forkawesome:pixelsize=14",
+    "JoyPixels:pixelsize=14:antialias=true:autohint=true",
+    "Font Awesome 5 Brands:pixelsize=14",
+    "Font Awesome 6 Free Solid:pixelsize=14",
+    "Material Icons:pixelsize=14",
+    "all\\-the\\-icons:pixelsize=14",
+    "MesloLGS NF:pixelsize=14",
+};
 #endif // BAR_PANGO_PATCH
+
 static const char dmenufont[]            = "monospace:size=14";
 
 static char c000000[]                    = "#000000"; // placeholder value

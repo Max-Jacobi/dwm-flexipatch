@@ -7,8 +7,8 @@ VERSION = 6.4
 PREFIX = ${HOME}/.local
 MANPREFIX = ${PREFIX}/share/man
 
-X11INC = /usr/X11R6/include
-X11LIB = /usr/X11R6/lib
+X11INC = /home/ho54hof/.local/include
+X11LIB = /home/ho54hof/.local/lib
 
 # FreeBSD (uncomment)
 #X11INC = /usr/local/include
@@ -57,7 +57,7 @@ IMLIB2LIBS = -lImlib2
 
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC} ${BDINC}
-LIBS = -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS) -lm
+LIBS = /home/ho54hof/.local/lib/libXft.so.2 -L${X11LIB} -lX11 ${XINERAMALIBS} ${FREETYPELIBS}  ${XRENDER} ${MPDCLIENT} ${XEXTLIB} ${XCBLIBS} ${KVMLIB} ${PANGOLIB} ${YAJLLIBS} ${IMLIB2LIBS} $(BDLIBS) -lm
 
 # flags
 CPPFLAGS = -Wl,--verbose -O3 -march=native -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\" ${XINERAMAFLAGS}

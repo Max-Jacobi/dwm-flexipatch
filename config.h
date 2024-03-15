@@ -436,6 +436,7 @@ const char *spcmd3[] = {"sptodo", NULL };
 const char *spcmd4[] = {TERMINAL, "--class", "spfile", "-e", "lf", NULL };
 const char *spcmd5[] = {"zotero", NULL };
 const char *spcmd6[] = {"spmail", NULL };
+const char *spcmd7[] = {TERMINAL, "--class", "spmusic", "-e", "spotify", NULL};
 
 static Sp scratchpads[] = {
    /* name          cmd  */
@@ -445,6 +446,7 @@ static Sp scratchpads[] = {
    {"spfile",      spcmd4},
    {"sprefs",      spcmd5},
    {"spmail",      spcmd6},
+   {"spmusic",     spcmd7},
 };
 #endif // SCRATCHPADS_PATCH
 
@@ -532,12 +534,13 @@ static const Rule rules[] = {
 	#if RENAMED_SCRATCHPADS_PATCH
 	RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 	#elif SCRATCHPADS_PATCH
-	RULE(.class = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 70% 60%")
-	RULE(.class = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 50% 80%")
-	RULE(.title = "sptodo", .tags = SPTAG(2), .isfloating = 1, .floatpos = "50% 50% 60% 70%")
-	RULE(.class = "spfile", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 80% 60%")
-	RULE(.title = "spmail", .tags = SPTAG(5), .isfloating = 1, .floatpos = "50% 50% 80% 80%")
+	RULE(.class = "spterm",  .tags = SPTAG(0), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 70% 60%")
+	RULE(.class = "spcalc",  .tags = SPTAG(1), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 50% 80%")
+	RULE(.title = "sptodo",  .tags = SPTAG(2), .isfloating = 1, .floatpos = "50% 50% 60% 70%")
+	RULE(.class = "spfile",  .tags = SPTAG(3), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 80% 60%")
 	RULE(.instance = "Navigator", .class = "Zotero", .tags = SPTAG(4), .isfloating = 1, .floatpos = "50% 50% 90% 90%")
+	RULE(.title = "spmail",  .tags = SPTAG(5), .isfloating = 1, .floatpos = "50% 50% 80% 80%")
+	RULE(.class = "spmusic", .tags = SPTAG(6), .isfloating = 1, .floatpos = "50% 50% 70% 70%")
 	#endif // SCRATCHPADS_PATCH
   RULE(.class = TERMCLASS, .isterminal = 1)
   RULE(.class = "st", .isterminal = 1)
@@ -1009,6 +1012,7 @@ static const Key keys[] = {
   { MODKEY,                       XK_v,          togglescratch,  {.ui = 3} },
   { MODKEY,                       XK_r,          togglescratch,  {.ui = 4} },
   { MODKEY,                       XK_m,          togglescratch,  {.ui = 5} },
+  { MODKEY|ShiftMask,             XK_m,          togglescratch,  {.ui = 6} },
   #endif // SCRATCHPADS_PATCH
 };
 #else

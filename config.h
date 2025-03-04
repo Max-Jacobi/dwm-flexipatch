@@ -436,7 +436,7 @@ const char *spcmd3[] = {"sptodo", NULL };
 const char *spcmd4[] = {TERMINAL, "--class", "spfile", "-e", "lf", NULL };
 const char *spcmd5[] = {"zotero", NULL };
 const char *spcmd6[] = {"spmail", NULL };
-const char *spcmd7[] = {TERMINAL, "--class", "spmusic", "-e", "spotify", NULL};
+const char *spcmd7[] = {TERMINAL, "--class", "spmusic", "-e", "spotify_player", NULL};
 
 static Sp scratchpads[] = {
    /* name          cmd  */
@@ -540,7 +540,7 @@ static const Rule rules[] = {
 	RULE(.class = "spfile",  .tags = SPTAG(3), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 80% 60%")
 	RULE(.instance = "Navigator", .class = "Zotero", .tags = SPTAG(4), .isfloating = 1, .floatpos = "50% 50% 90% 90%")
 	RULE(.title = "spmail",  .tags = SPTAG(5), .isfloating = 1, .floatpos = "50% 50% 80% 80%")
-	RULE(.class = "spmusic", .tags = SPTAG(6), .isfloating = 1, .floatpos = "50% 50% 70% 70%")
+	RULE(.class = "spmusic", .tags = SPTAG(6), .isfloating = 1, .isterminal = 1, .floatpos = "50% 50% 70% 70%")
 	#endif // SCRATCHPADS_PATCH
   RULE(.class = TERMCLASS, .isterminal = 1)
   RULE(.class = "st", .isterminal = 1)
@@ -985,8 +985,8 @@ static const Key keys[] = {
   { MODKEY,                       XK_comma,      setmfact,  {.f = -0.05} },
   { MODKEY,                       XK_period,     setmfact,  {.f = +0.05} },
 
-  { MODKEY,                       XK_space,      zoom,    {0} },
-  { MODKEY|ShiftMask,             XK_space,      togglefloating,  {0} },
+  { MODKEY,                       XK_space,      togglefloating,  {0} },
+  { MODKEY|ShiftMask,             XK_space,      zoom,    {0} },
 	#if DISTRIBUTETAGS_PATCH
 	{ MODKEY|ControlMask,           XK_d,          distributetags,         {0} },
 	#endif // DISTRIBUTETAGS_PATCH
@@ -1466,6 +1466,10 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,                   Button1,        sigstatusbar,   {.i = 1 } },
 	{ ClkStatusText,        0,                   Button2,        sigstatusbar,   {.i = 2 } },
 	{ ClkStatusText,        0,                   Button3,        sigstatusbar,   {.i = 3 } },
+	{ ClkStatusText,        0,                   Button4,        sigstatusbar,   {.i = 4 } },
+	{ ClkStatusText,        0,                   Button5,        sigstatusbar,   {.i = 5 } },
+	{ ClkStatusText,        ShiftMask,           Button1,        sigstatusbar,   {.i = 6 } },
+	{ ClkStatusText,        ShiftMask,           Button2,        sigstatusbar,   {.i = 7 } },
 	#elif BAR_STATUSCMD_PATCH
 	{ ClkStatusText,        0,                   Button1,        spawn,          {.v = statuscmd } },
 	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = statuscmd } },
